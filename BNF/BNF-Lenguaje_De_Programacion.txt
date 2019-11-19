@@ -1,0 +1,10 @@
+-----------------------BNF----------------------------
+
+                LENGUAJE DE PROGRMACION
+
+
+**NUMEROS
+
+<entero>::- <signo><numero> | <numero>
+<numero>::- <digito> | <numero><digito>
+
