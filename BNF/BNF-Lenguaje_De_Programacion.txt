@@ -18,7 +18,7 @@
 
 *Cadenas
 
-<cadena>::-' " '<contenedor>"'"
+<cadena>::-' " '<contenedor>' " '
 <contenido>::-<caracter> | <contenido><caracter>
 <caracter>::-<letra> | <digito>
 <letra>::-<mayuscula> | <minuscula>
