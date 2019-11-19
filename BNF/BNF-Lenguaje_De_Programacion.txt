@@ -1,33 +1,138 @@
------------------------BNF----------------------------
 
-                LENGUAJE DE PROGRAMACION
+----------------------BNF----------------------------
+               LENGUAJE DE PROGRAMACION
+
+**NUMEROS**
 
 
-**NUMEROS
+**ENTEROS
 
-*Enteros
 
 <entero>::-<signo><numero> | <numero>
+
 <numero>::-<digito> | <numero> <digito>
+
 <signo>::- +|-
+
 <digito>::-'0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
 
-*Decimales
+
+
+**DECIMALES
 
 <decimal>::-<signo><numero> | <numero>"."<numero>
 
-*Cadenas
 
-<cadena>::-' " '<contenedor>' " '
+
+
+**CADENAS**
+
+<cadena>::-' " '<contenedor>" ' "
+
 <contenido>::-<caracter> | <contenido><caracter>
+
 <caracter>::-<letra> | <digito>
+
 <letra>::-<mayuscula> | <minuscula>
+
 <mayuscula>::- 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
+
 <minuscula>::- 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'
 
-**VARIABLES
+
+
+**VARIABLES**
 
 <definidor>::-<definir>'\s'<variable>'\s'<tipo>
+
 <definir>::- 'definir'
+
 <variable>::-<mayuscula> | <variable><contenido>
+
 <tipo>::- 'entero' | 'decimal' | 'cadena'
+
+
+
+**REPETIR_HASTA**
+
+<ciclo_repetir>::- 'repetir' <instruccion> 'hasta que '('<condiciones>')'
+
+<condiciones>::-<condicion_e> |<condicion_d>| <condicion_c> | <condiciones><op_log><condicion_e> | <condiciones><op_log><condicion_d> | <condiciones><op_log><condicion_c>
+
+<condicion_e>::-<entero><op_rel><entero> | <entero><op_rel><decimal> | <entero><op_rel><variable>
+
+<condicion_d>::-<decimal><op_rel><decimal> | <decimal><op_rel><entero> | <decimal><op_rel><variable>
+
+<condicion_c>::-<cadena><op_rel_cadenas><cadena> | <cadena><op_rel_cadenas><variable>
+
+<condicion_v>::-<variable><op_rel><variable> | <variable><op_rel><entero> | <variable><op_rel><decimal> | <variable><op_rel_cadena><cadena>
+
+<op_log>::- '||' | '&&' | '!'
+
+<op_rel>::- '<'| '>' | '==' | '!=' | '<=' | '>=' 
+
+<op_rel_cadenas>::- '==' | '!='  
+
+
+
+**MIENTRAS
+
+<ciclo_mientras>::- 'mientras' '('<condiciones>')' <instruccion> 'repetir'
+
+
+
+**SI
+
+<seleccion_si>::- 'si' '('<condiciones>')' 'hacer' <instruccion> 'finsi' 
+
+
+
+**SI(VARIAS INSTRUCCIONES)
+
+<seleccion_sino>::- 'si '('<condiciones>')' 'hacer' <instruccion> 'sino' <instruccion> 'finsi'
+
+
+
+**INSTRUCCION
+
+
+///
+
+
+
+**SCANNER
+
+<scanner>::- 'leer' '\n ' <variable>
+
+
+
+**IMPRIMIR
+
+<print>::- 'imprimir' '\n' <variable> | 'imprimir' '\n' <cadena>
+
+
+
+**CURSOR
+
+<cursor>::- 'cursor('<entero>','<entero>')'
+
+
+
+**OPERADORES ARITMETICOS
+
+<operaciones>::-<conjunto_operaciones>
+
+<conjunto_operaciones>::-<alfanumerico><operador><alfanumerico> | <conjunto_operaciones>
+
+<alfanumerico>::-<numero> | <variable>
+
+<operador>::- +|-|*|/
+
+
+
+**OPERADOR DE ASIGNACIÓN
+
+<asignacion>::- <variable> '<-' <valor>
+<valor>::- <entero> | <decimal> | <cadena>
+
+
