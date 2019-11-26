@@ -1,9 +1,8 @@
 
 ----------------------BNF (Lenguaje de Programación)----------------------------
-
 <lenguaje_de_programacion>::- <conjunto_de_instrucciones>
 <conjunto_de_instrucciones>::- <instruccion> | <conjunto_de_instrucciones><instruccion>
-<instruccion>::- <definidor> | <operaciones> | <ciclos> | <scanner> | <print> | <cursor> | <operaciones> | <asignacion>
+<instruccion>::- <definidor> | <ciclos> | <scanner> | <print> | <cursor> | <operaciones> | <asignacion>
 
 <numero>::- <entero> | <decimal>
 <entero>::- <signo><cifras> | <cifras>
@@ -12,14 +11,14 @@
 <digito>::- '0'|'1'|'2'|'3'|'4'|'5'|'6'|'7'|'8'|'9'
 <decimal>::- <signo><cifras> | <cifras>"."<cifras>
 
-<cadena>::- ' " '<contenedor>" ' "
+<cadena>::- ' " '<contenedor>' " '
 <contenido>::- <caracter> | <contenido><caracter>
 <caracter>::- <letra> | <digito>
 <letra>::- <mayuscula> | <minuscula>
 <mayuscula>::- 'A'|'B'|'C'|'D'|'E'|'F'|'G'|'H'|'I'|'J'|'K'|'L'|'M'|'N'|'O'|'P'|'Q'|'R'|'S'|'T'|'U'|'V'|'W'|'X'|'Y'|'Z'
 <minuscula>::- 'a'|'b'|'c'|'d'|'e'|'f'|'g'|'h'|'i'|'j'|'k'|'l'|'m'|'n'|'o'|'p'|'q'|'r'|'s'|'t'|'u'|'v'|'w'|'x'|'y'|'z'
 
-<definidor>::- <definir>'\s'<variable>'\s'<tipo>
+<definidor>::- <definir><variable><tipo>
 <definir>::- 'definir'
 <variable>::- <mayuscula> | <variable><contenido>
 <tipo>::- 'entero' | 'decimal' | 'cadena'
@@ -27,7 +26,7 @@
 <ciclos>::- <ciclos_repeticion> | <ciclos_decision>
 <ciclos_repeticion>::- <ciclo_repetir> | <ciclo_mientras>
 
-<ciclo_repetir>::- 'repetir' <conjunto_de_instrucciones> 'hasta que '('<condiciones>')'
+<ciclo_repetir>::- 'repetir{' <conjunto_de_instrucciones> '}hasta que '('<condiciones>')'
 <condiciones>::- <condicion_e> |<condicion_d>| <condicion_c> | <condiciones><op_log><condicion_e> | <condiciones><op_log><condicion_d> | <condiciones><op_log><condicion_c>
 <condicion_e>::- <entero><op_rel><entero> | <entero><op_rel><decimal> | <entero><op_rel><variable>
 <condicion_d>::- <decimal><op_rel><decimal> | <decimal><op_rel><entero> | <decimal><op_rel><variable>
@@ -36,25 +35,23 @@
 <op_log>::- '||' | '&&' | '!'
 <op_rel>::- '<'| '>' | '==' | '!=' | '<=' | '>=' 
 <op_rel_cadenas>::- '==' | '!=' 
-<ciclo_mientras>::- 'mientras' '('<condiciones>')' <conjunto_de_instrucciones> 'repetir'
+<ciclo_mientras>::- 'mientras('<condiciones>'){' <conjunto_de_instrucciones> '}repetir'
 
 <ciclos_decision>::- <seleccion_si> | <seleccion_sino>
 
-<seleccion_si>::- 'si' '('<condiciones>')' 'hacer' <conjunto_de_instrucciones> 'finsi' 
-<seleccion_sino>::- 'si '('<condiciones>')' 'hacer' <conjunto_de_instrucciones> 'sino' <conjunto_de_instrucciones> 'finsi'
+<seleccion_si>::- 'si('<condiciones>')hacer{' <conjunto_de_instrucciones> '}finsi' 
+<seleccion_sino>::- 'si('<condiciones>')hacer{' <conjunto_de_instrucciones> '}sino{' <conjunto_de_instrucciones> '}finsi'
 
-<scanner>::- 'leer' '\n ' <variable>
+<scanner>::- 'leer'<variable>
 
-<print>::- 'imprimir' '\n' <variable> | 'imprimir' '\n' <cadena>
+<print>::- 'imprimir'<variable> | 'imprimir'<cadena>
 
 <cursor>::- 'cursor('<entero>','<entero>')'
 
 <operaciones>::- <conjunto_operaciones>
-<conjunto_operaciones>::- <alfanumerico><operador><alfanumerico> | <conjunto_operaciones>
+<conjunto_operaciones>::- <alfanumerico><operador><alfanumerico> | <conjunto_operaciones><operador><alfanumerico>
 <alfanumerico>::- <numero> | <variable>
 <operador>::- +|-|*|/
 
 <asignacion>::- <variable> '<-' <valor>
-<valor>::- <entero> | <decimal> | <cadena>
-
-
+<valor>::- <entero> | <decimal> | <cadena> | <operaciones> | <variable>
