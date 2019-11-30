@@ -1,1 +1,0 @@
-Falta hacer la maquina de estados
