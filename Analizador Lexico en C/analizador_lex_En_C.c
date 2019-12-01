@@ -8,10 +8,11 @@ int main(void){
     char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
 
     printf("--------------ANALIZADOR LEXICO EN C--------------");
+    printf("Ingrese un valor en la cadena ");
+    scanf(entero);
     for (int i = 0; i < 11; i++){
        printf("En el arreglo tienes el valor %s \n",palabras_reservadas[i]);
     }
 
 
 }
-
