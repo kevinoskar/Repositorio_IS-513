@@ -9,7 +9,7 @@ int main(void){
 
     printf("--------------ANALIZADOR LEXICO EN C--------------");
     for (int i = 0; i < 11; i++){
-       printf("En el arreglo tiene el valor %s \n",palabras_reservadas[i]);
+       printf("En el arreglo tienes el valor %s \n",palabras_reservadas[i]);
     }
 
 
