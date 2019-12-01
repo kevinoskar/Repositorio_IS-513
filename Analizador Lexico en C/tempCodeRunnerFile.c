@@ -1,1 +1,1 @@
-*ptr++;
+caracter
