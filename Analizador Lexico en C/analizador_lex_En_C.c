@@ -53,7 +53,7 @@ int main(void){
                estado=3;  //Estado de Numero entrante
            }else if (estado==0)
            {
-               printf("No se permiten numeros al inicio del programa \n");
+             //  printf("No se permiten numeros al inicio del programa \n");
            }
            
            
@@ -79,7 +79,7 @@ int main(void){
                estado=4;  //estado Punto Decimal
             }else if (estado==0)
             {
-                printf("No se permiten puntos al inicio del programa \n");
+               // printf("No se permiten puntos al inicio del programa \n");
             }
             
             
