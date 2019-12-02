@@ -9,83 +9,81 @@
 int main(void){
     
     //Declaracioness
-    char buf[MAX],caracter;
-    char *ptr=buf;
+    char * tipos_datos[][3]={"entero","decimal","cadena"};
     char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
-    char letras_minusculas[][25]={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
-    int Estado=0;   //Estado Iniciak en 0
-    
-    
-    //Estados o Patrones
+    int estado=0;
+    char * res;
+    char * cadena;
     printf("--------------ANALIZADOR LEXICO EN C-------------- \n");
-    gets(buf);
-    if(*ptr =='\0'){
-        printf("Error, no se ingreso ningun caracter",stderr);
+    //Abriendo Archivo Externo
+    FILE *ptfile;
+    char caracter;
+    ptfile=fopen("analizador_lex.prg","r");
+    if(ptfile==NULL){
+        fputs("error",stderr);
         exit(1);
     }
-    
-    while (*ptr != '\0'){
-        //printf("%c",*ptr);
-        caracter=*ptr;
-        //Case Maquina de Estados
-        for (int i = 0; i < (sizeof(letras_minusculas)/sizeof(letras_minusculas[0])); i++)
-        {
-            if (caracter == letras_minusculas[i])
+    while ((caracter=fgetc(ptfile))!=EOF){
+        printf("%c",caracter);
+    *cadena=caracter;
+     if(caracter >= 'a' && caracter <= 'z'){
+        caracter='m';
+         if (atoi(cadena) == atoi(palabras_reservadas[0]))
             {
-                printf("Encontre la letra %s %c \n",letras_minusculas[i],caracter);
+                printf("Se reconocio definir %c",cadena);
             }
+       }else if(caracter >= 'A' && caracter <= 'Z'){
+            caracter='M';
+       }else if(caracter >= '0' && caracter <='9' ){
+           caracter='n';
+       }
 
-        }
-        
+
+    ///Estados o Patrones
 
 
+    ///Casos
         switch (caracter){
-        case '0':
-           printf("Se ha encontrado un numero: %i \n",0);
+        case 'n':
+           printf("Se ha encontrado un numero\n");
+           if (estado==0)
+           {
+               estado=38;  //Estado de Numero entrante
+           }
+           
             break;
-        case '1':
-           printf("Se ha encontrado un numero: %i \n",1);
+        case 'm'://Minusculas
+            
+        case 'M'://Mayusculas
+            printf(" Se ha Encontrado una letra, es Mayuscula \n");
             break;
-        case '2':
-           printf("Se ha encontrado un numero: %i \n",2);
+        case '.':
+            if (estado==38)
+            {
+               estado=39;  //estado Punto Decimal
+            }
+            
             break;
-        case '3':
-           printf("Se ha encontrado un numero: %i \n",3);
+        case '{':
+            if (estado==0||estado==50)
+            {
+                estado=1;
+            }
             break;
-        case '4':
-           printf("Se ha encontrado un numero: %i \n",4);
-            break;
-        case '5':
-           printf("Se ha encontrado un numero: %i \n",5);
-            break;
-        case '6':
-           printf("Se ha encontrado un numero: %i \n",6);
-            break;
-        case '7':
-           printf("Se ha encontrado un numero: %i \n",7);
-            break;
-        case '8':
-           printf("Se ha encontrado un numero: %i \n",8);
-            break;
-        case '9':
-           printf("Se ha encontrado un numero: %i \n ",9);
-            break;
-        
-
-
-
-
-
-
-
-
-
-
         default:
-           // printf("Se ha encontrado una letra: %c \n ",caracter);
             break;
         }
-        *ptr++;
+
+        if (estado==38){
+         res="Tkn_numero";
+        }
+        if (estado==1)
+        {
+            res="tkn_bloque_inicio";
+        }
+        
+    printf("%s",res);
     }
-    
+    fclose(ptfile);
+    return 0;
 }

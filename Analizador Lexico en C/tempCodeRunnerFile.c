@@ -1,1 +1,4 @@
-caracter
+
+            {
+                estado=1;
+            }
