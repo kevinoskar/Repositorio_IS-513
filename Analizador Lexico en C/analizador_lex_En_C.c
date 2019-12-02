@@ -12,9 +12,7 @@ int main(void){
     char buf[MAX],caracter;
     char *ptr=buf;
     char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
-    char letras_minusculas[][25]={"a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"};
     int Estado=0;   //Estado Iniciak en 0
-    
     
     //Estados o Patrones
     printf("--------------ANALIZADOR LEXICO EN C-------------- \n");
@@ -25,20 +23,23 @@ int main(void){
     }
     
     while (*ptr != '\0'){
-        //printf("%c",*ptr);
         caracter=*ptr;
+        printf("%c",caracter);
+        //Comprobar Letra
+       
+       if(caracter >= 'a' && caracter <= 'z'){
+        printf("-> Es minuscula \n");
+        caracter='m';
+
+       }else if(caracter >= 'A' && caracter <= 'Z'){
+            printf("-> Es mayuscula \n");
+            caracter='M';
+       }else{
+            printf("-> No es una letra \n ");
+       }
+
+
         //Case Maquina de Estados
-        for (int i = 0; i < (sizeof(letras_minusculas)/sizeof(letras_minusculas[0])); i++)
-        {
-            if (caracter == letras_minusculas[i])
-            {
-                printf("Encontre la letra %s %c \n",letras_minusculas[i],caracter);
-            }
-
-        }
-        
-
-
         switch (caracter){
         case '0':
            printf("Se ha encontrado un numero: %i \n",0);
@@ -70,19 +71,15 @@ int main(void){
         case '9':
            printf("Se ha encontrado un numero: %i \n ",9);
             break;
-        
-
-
-
-
-
-
-
-
-
-
+        case 'M':
+                //AQUI IRIA EL ESTADO 
+                //Y SUIS INSTRUCCIONES
+                //RETORNAR TOKEN
+            break;
+        case 'm':
+            break;
+                
         default:
-           // printf("Se ha encontrado una letra: %c \n ",caracter);
             break;
         }
         *ptr++;
