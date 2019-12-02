@@ -30,7 +30,7 @@ int main(void){
         caracter='m';
          if (atoi(cadena) == atoi(palabras_reservadas[0]))
             {
-                printf("Se reconocio definir %c",cadena);
+                printf("Se reconocio definir %s",palabras_reservadas[0]);
             }
        }else if(caracter >= 'A' && caracter <= 'Z'){
             caracter='M';
