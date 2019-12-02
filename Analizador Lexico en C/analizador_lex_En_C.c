@@ -11,7 +11,7 @@ int main(void){
     //Declaracioness
     char * tipos_datos[][3]={"entero","decimal","cadena"};
     char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
-    int estado=0;
+    int estado=0; //ESTADO INICIAL
     char * res;
     char * cadena;
     printf("--------------ANALIZADOR LEXICO EN C-------------- \n");
@@ -25,18 +25,21 @@ int main(void){
     }
     while ((caracter=fgetc(ptfile))!=EOF){
         printf("%c",caracter);
-    *cadena=caracter;
-     if(caracter >= 'a' && caracter <= 'z'){
-        caracter='m';
-         if (atoi(cadena) == atoi(palabras_reservadas[0]))
-            {
-                printf("Se reconocio definir %s",palabras_reservadas[0]);
-            }
-       }else if(caracter >= 'A' && caracter <= 'Z'){
+        *cadena=caracter;
+    
+    
+    //FILTRAR letra(Mayuscula o Minuscula) o numero 
+        if(caracter >= 'a' && caracter <= 'z'){
+            caracter='m';
+            /*if (atoi(cadena) == atoi(palabras_reservadas[0]))
+                {
+                    printf("Se reconocio definir %s \n",palabras_reservadas[0]);
+                }*/
+        }else if(caracter >= 'A' && caracter <= 'Z'){
             caracter='M';
-       }else if(caracter >= '0' && caracter <='9' ){
-           caracter='n';
-       }
+        }else if(caracter >= '0' && caracter <='9' ){
+            caracter='n';
+        }
 
 
     ///Estados o Patrones
@@ -45,44 +48,64 @@ int main(void){
     ///Casos
         switch (caracter){
         case 'n':
-           printf("Se ha encontrado un numero\n");
-           if (estado==0)
+           if (estado==1 || estado==2)
            {
-               estado=38;  //Estado de Numero entrante
+               estado=3;  //Estado de Numero entrante
+           }else if (estado==0)
+           {
+               printf("No se permiten numeros al inicio del programa \n");
            }
+           
            
             break;
         case 'm'://Minusculas
-            
+            if(estado==0||estado==2) 
+            {
+               estado=1;  
+            }
+            break;
         case 'M'://Mayusculas
-            printf(" Se ha Encontrado una letra, es Mayuscula \n");
+            if(estado==0||estado==1) 
+            {
+               estado=2;  
+            }
+            break;
+        case ' '://Espacio En Blanco
+            estado=0;
             break;
         case '.':
-            if (estado==38)
+            if (estado==3 ||estado==1)
             {
-               estado=39;  //estado Punto Decimal
+               estado=4;  //estado Punto Decimal
+            }else if (estado==0)
+            {
+                printf("No se permiten puntos al inicio del programa \n");
             }
             
+            
             break;
-        case '{':
-            if (estado==0||estado==50)
-            {
-                estado=1;
-            }
-            break;
+        
         default:
             break;
         }
 
-        if (estado==38){
-         res="Tkn_numero";
+        //FIN DEL SWITCH
+        //DECISIONES
+        if (estado==3){
+            res=" Tkn_numero\n";
         }
-        if (estado==1)
+        if (estado==40){
+            res=" Tkn_bloque_inicio\n";
+        }
+        if (estado==1){
+            res=" Tkn_letra_minuscula\n";
+        }
+        if (estado==2)
         {
-            res="tkn_bloque_inicio";
+            res=" Tkn_letra_mayuscula\n";
         }
         
-    printf("%s",res);
+        printf("%s",res);
     }
     fclose(ptfile);
     return 0;
