@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-#define MAX 100
-
+#include <string.h>
 
 
 
@@ -14,6 +12,9 @@ int main(void){
     int estado=0; //ESTADO INICIAL
     char * res;
     char * cadena;
+    char imprimir[100]=" ";
+    
+    
     printf("--------------ANALIZADOR LEXICO EN C-------------- \n");
     //Abriendo Archivo Externo
     FILE *ptfile;
@@ -24,7 +25,7 @@ int main(void){
         exit(1);
     }
     while ((caracter=fgetc(ptfile))!=EOF){
-        printf("%c",caracter);
+        //printf("%c",caracter);
         *cadena=caracter;
     
     
@@ -40,8 +41,11 @@ int main(void){
         }else if(caracter >= '0' && caracter <='9' ){
             caracter='n';
         }
-
-
+        if (caracter =='\0')
+        {
+            printf("Encontre una palabra");
+        }
+        
     ///Estados o Patrones
 
 
@@ -70,9 +74,7 @@ int main(void){
                estado=2;  
             }
             break;
-        case ' '://Espacio En Blanco
-            estado=0;
-            break;
+    
         case '.':
             if (estado==3 ||estado==1)
             {
@@ -81,10 +83,8 @@ int main(void){
             {
                // printf("No se permiten puntos al inicio del programa \n");
             }
-            
-            
-            break;
-        
+        case ' ':
+            estado=0;
         default:
             break;
         }
@@ -92,21 +92,24 @@ int main(void){
         //FIN DEL SWITCH
         //DECISIONES
         if (estado==3){
-            res=" Tkn_numero\n";
+            res="Tkn_numero\n";
         }
         if (estado==40){
-            res=" Tkn_bloque_inicio\n";
+            res="Tkn_bloque_inicio\n";
         }
         if (estado==1){
-            res=" Tkn_letra_minuscula\n";
+            res="Tkn_letra_minuscula\n";
         }
         if (estado==2)
         {
-            res=" Tkn_letra_mayuscula\n";
+            res="Tkn_letra_mayuscula\n";
         }
         
-        printf("%s",res);
+        strcat(imprimir,res);
     }
+    printf("%s",imprimir);
     fclose(ptfile);
+
+
     return 0;
 }
