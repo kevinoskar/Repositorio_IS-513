@@ -11,11 +11,11 @@ int main(void){
     char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
     int estado=0; //ESTADO INICIAL
     char * res;
-    char cadena[50];
+    char * cadena;
     char imprimir[100]=" ";
     
     
-    printf("--------------ANALIZADOR LEXICO EN C--------------\n");
+    printf("--------------ANALIZADOR LEXICO EN C-------------- \n");
     //Abriendo Archivo Externo
     FILE *ptfile;
     char caracter;
@@ -28,8 +28,7 @@ int main(void){
         //printf("%c",caracter);
         *cadena=caracter;
     
-      
-        
+    
     //FILTRAR letra(Mayuscula o Minuscula) o numero 
         if(caracter >= 'a' && caracter <= 'z'){
             caracter='m';
@@ -39,10 +38,14 @@ int main(void){
                 }*/
         }else if(caracter >= 'A' && caracter <= 'Z'){
             caracter='M';
-        }else if(caracter >= '0' && caracter <= '9' ){
+        }else if(caracter >= '0' && caracter <='9' ){
             caracter='n';
         }
-
+        if (caracter =='\0')
+        {
+            printf("Encontre una palabra");
+        }
+        
     ///Estados o Patrones
 
 
@@ -54,13 +57,13 @@ int main(void){
                estado=3;  //Estado de Numero entrante
            }else if (estado==0)
            {
-              printf("No se permiten numeros al inicio del programa \n");
+             //  printf("No se permiten numeros al inicio del programa \n");
            }
            
            
             break;
         case 'm'://Minusculas
-            if(estado==0||estado==2||estado==70) 
+            if(estado==0||estado==2) 
             {
                estado=1;  
             }
@@ -76,10 +79,12 @@ int main(void){
             if (estado==3 ||estado==1)
             {
                estado=4;  //estado Punto Decimal
+            }else if (estado==0)
+            {
+               // printf("No se permiten puntos al inicio del programa \n");
             }
         case ' ':
-            estado=70;
-            break;
+            estado=0;
         default:
             break;
         }
@@ -87,17 +92,17 @@ int main(void){
         //FIN DEL SWITCH
         //DECISIONES
         if (estado==3){
-            res="Tkn_numero \n";
+            res="Tkn_numero\n";
         }
-        if (estado==70){
-            res="Tkn_espacio \n";
+        if (estado==40){
+            res="Tkn_bloque_inicio\n";
         }
         if (estado==1){
-            res="Tkn_letra_minuscula \n";
+            res="Tkn_letra_minuscula\n";
         }
         if (estado==2)
         {
-            res="Tkn_letra_mayuscula \n";
+            res="Tkn_letra_mayuscula\n";
         }
         
         strcat(imprimir,res);

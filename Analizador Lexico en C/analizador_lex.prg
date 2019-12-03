@@ -1,1 +1,1 @@
-definir s342
+ definir ns2 s
