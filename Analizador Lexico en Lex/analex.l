@@ -12,38 +12,40 @@ SIGNO [+-]
 
 %%
 
-{MAYUS}({MAYUS}|{MINUS}|{DIGITO})?+   { printf("Una Variable: %s \n", yytext); }
+Salir   { Salir(); }
+
+{MAYUS}({MAYUS}|{MINUS}|{DIGITO})*   { printf("Una Variable: %s\n", yytext); }
 
 {SIGNO}?{DIGITO}+   { printf("Un Entero: %s (%d)\n", yytext, atoi(yytext)); }
 
 {SIGNO}?{DIGITO}+\.{DIGITO}+   { printf("Un Decimal: %s (%g)\n", yytext, atof(yytext)); }
 
-["]({DIGITO}|{MAYUS}|{MINUS}|[ ])+["]   { printf("Una Cadena: %s \n", yytext); }
+["]({DIGITO}|{MAYUS}|{MINUS}|[ ])+["]   { printf("Una Cadena: %s\n", yytext); }
 
-(repetir|mientras|si|definir|leer|imprimir|cursor|hasta|finsi|sino) { printf("Una Palabra Reservada: %s\n", yytext); }
+repetir		{ printf("Inicia o Finaliza Ciclo de Repeticion: %s\n", yytext); }
+mientras	{ printf("Inicia Ciclo de Repeticion: %s\n", yytext); }
+si		{ printf("Inicia Ciclo de Decision: %s\n", yytext); }
+definir		{ printf("Se definira una variable: %s\n", yytext); }
+leer		{ printf("Se leera la variable: %s\n", yytext); }
+imprimir	{ printf("Se imprimira: %s\n", yytext); }
+cursor		{ printf("Se define coordenadas de puntero: %s\n", yytext); }
+hasta		{ printf("Finaliza Ciclo de Repeticion: %s\n", yytext); }
+finsi		{ printf("Finaliza Ciclo de Decision: %s\n", yytext); }
+sino 		{ printf("Define otra instruccion: %s\n", yytext); }
 
-"{"   { printf("Se abre una instrucción %s \n", yytext); }
+"{"   { printf("Se abre una instrucción %s\n", yytext); }
 
-"}"   { printf("Se cierra una instrucción %s \n", yytext); }
+"}"   { printf("Se cierra una instrucción %s\n", yytext); }
 
-Salir   { Salir(); }
+"{"[^}\n]*"}"     /* se come una linea de comentarios */
 
-.   {printf("Caracter o desconocido: %s\n", yytext ); }
+.+   {printf("Comando Incorrecto: %s\n", yytext ); }
 
 
 %%
 
-int main(int argc, char *argv[]){
-	if (argc == 2){
-		yyin= fopen(argv[1], "rt");
-		if (yyin == NULL){
-			printf("no se puede abrir el archivo %s ", argv[1]);
-			exit(1);
-		}
-	}
-	else{
-	    yyin = stdin;
-	}
+int main(void){
+	yyin = stdin;
 	yylex();
 	return 0;
 }
