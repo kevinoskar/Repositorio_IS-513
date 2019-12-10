@@ -1,1 +1,0 @@
- definir ns2 s
