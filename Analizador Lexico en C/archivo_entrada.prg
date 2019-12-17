@@ -1,1 +1,1 @@
-definir Variable23 == 23 leer Variable imprimir Ss repetir { ( As > 0 ) }
+definir Variable23 == 23 leer Variable imprimir Ss repetir { As > 0 } 
