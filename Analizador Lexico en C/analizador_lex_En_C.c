@@ -39,10 +39,13 @@ int main(void){
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
-                    printf("Palabra Reservada Encontrada  %s ",palabras_reservadas[i]);
+                    printf("Palabra Reservada Encontrada  %s \n ",palabras_reservadas[i]);
                     
                 }
             }
+            memset(cadena,0,sizeof(cadena));
+            contador=0;
+
         }
         
        

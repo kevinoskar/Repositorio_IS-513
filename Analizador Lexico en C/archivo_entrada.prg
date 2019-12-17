@@ -1,1 +1,1 @@
-definir sdds
+definir leer 
