@@ -1,1 +1,1 @@
-definir leer Mkdir == ! 
+definir Variable23 == 23 leer Variable imprimir Ss repetir { ( As > 0 ) }

@@ -46,7 +46,6 @@ int main(void){
                 caracter='n';
             }   
         }else{
-            printf("%s\n",cadena);
             strcpy(res,"<Tkn_");
             
             if(estado==5){
@@ -57,7 +56,7 @@ int main(void){
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
-                    printf("Palabra Reservada Encontrada %s \n",palabras_reservadas[i]);
+
                     caracter='p';
                     strcat(res,cadena);
                     strcat(res,">");
@@ -68,25 +67,24 @@ int main(void){
             }
             if(estado==6){
                 for (int i=0;i<=(sizeof(operador_relacional)/sizeof(operador_relacional[0]));i++){
-                if (strcmp(cadena,operador_relacional[i])==0){
-                    printf("Operador Relacional Encontrada %s \n",operador_relacional[i]); 
-                    caracter='o';
-                    strcat(res,"operador_relacional");
-                    strcat(res,">");
-                }    
-            }
-            memset(cadena,0,sizeof cadena);
-            contador=0;
-            }else{
+                    if (strcmp(cadena,operador_relacional[i])==0){ 
+                        caracter='o';
+                        strcat(res,"operador_relacional");
+                        strcat(res,">");
+                    } 
+                }
                 for (int i=0;i<=(sizeof(operador_logico)/sizeof(operador_logico[0]));i++){
                     if (strcmp(cadena,operador_logico[i])==0){
-                        printf("Operador Logico Encontrada %s \n",operador_logico[i]); 
                         caracter='l';
                         strcat(res,"operador_logico");
                         strcat(res,">");
-                        estado=7;
                     } 
                 }
+            memset(cadena,0,sizeof cadena);
+            contador=0;
+            }
+            if(estado==3){
+                caracter='u';
             }
         }
 
@@ -98,18 +96,13 @@ int main(void){
     ///Casos
         switch (caracter){
             case 'n':
-            if (estado==1 || estado==2 ||estado==70)
+            if (estado==1 || estado==2 || estado==0)
             {
                 estado=3;  //Estado de Numero entrante
-            }else if (estado==0)
-            {
-                printf("No se permiten numeros al inicio del programa \n");
             }
-            
-            
                 break;
             case 'm'://Minusculas
-                if(estado==0||estado==1|estado==70) 
+                if(estado==0||estado==1) 
                 {
                 estado=1;  
                 }
@@ -154,11 +147,42 @@ int main(void){
                     estado=0;
                 }
             case 'l':
-                if(estado==7){
+                if(estado==6){
                     strcat(imprimir,res);
                     memset(cadena,0,sizeof cadena);
                     contador=0;
                     estado=0;
+                }
+                break;
+            case 'u':
+                strcat(imprimir,"<Tkn_numero>");
+                memset(cadena,0,sizeof cadena);
+                contador=0;
+                estado=0;
+                break;
+            case '{':
+                if(estado==0){
+                    strcat(imprimir,"<Tkn_inicio_bloque>");
+                }
+                break;
+            case '}':
+                if(estado==0){
+                    strcat(imprimir,"<Tkn_fin_bloque>");
+                }
+                break;
+            case '(':
+                if(estado==0){
+                    strcat(imprimir,"<Tkn_inicio_parentesis>");
+                }
+                break;
+            case ')':
+                if(estado==0){
+                    strcat(imprimir,"<Tkn_fin_parentesis>");
+                }
+                break;
+            case '"':
+                if(estado==0){
+                    strcat(imprimir,"<Tkn_cadena>");
                 }
                 break;
             default:

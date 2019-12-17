@@ -1,1 +1,1 @@
-<Tkn_definir><Tkn_leer><Tkn_variable><Tkn_operador_relacional>
+<Tkn_definir><Tkn_variable><Tkn_operador_relacional><Tkn_numero><Tkn_leer><Tkn_variable><Tkn_imprimir><Tkn_variable><Tkn_repetir><Tkn_inicio_bloque><Tkn_operador_relacional><Tkn_numero><Tkn_fin_parentesis>
