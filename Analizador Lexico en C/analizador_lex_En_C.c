@@ -14,7 +14,7 @@ int main(void){
 
     int estado=0; //ESTADO INICIAL
     int contador=0;
-    char cadena[20]="",res[20]="";
+    char cadena[20]="",res[20]="<Tkn_";
     
     //Respuesta a Imprimir en Array
     char imprimir[1000]="";
@@ -47,11 +47,14 @@ int main(void){
             }   
         }else{
             printf("%s\n",cadena);
+            strcpy(res,"<Tkn_");
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
-                    printf("Palabra Reservada Encontrada  %s\n",palabras_reservadas[i]);
+                    printf("Palabra Reservada Encontrada %s \n",palabras_reservadas[i]);
                     caracter='p';
+                    strcat(res,cadena);
+                    strcat(res,">");
                 }
             }
             memset(cadena,0,sizeof cadena);
@@ -99,7 +102,8 @@ int main(void){
             case 'p':
                 if(estado==1||estado==0)
                 {
-                    strcat(imprimir,"Palabra Reservada ");
+                    strcat(imprimir,res);
+                    estado=0;
                 }
                 break;
             default:

@@ -1,1 +1,1 @@
-Palabra Reservada Palabra Reservada 
+<Tkn_definir><Tkn_leer>
