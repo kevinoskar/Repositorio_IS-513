@@ -39,7 +39,7 @@ int main(void){
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
-                    printf("Palabra Reservada Encontrada  %s \n ",palabras_reservadas[i]);
+                    printf("Palabra Reservada Encontrada  %s\n",palabras_reservadas[i]);
                     
                 }
             }
@@ -77,7 +77,7 @@ int main(void){
             
                 break;
             case 'm'://Minusculas
-                if(estado==0||estado==2||estado==70) 
+                if(estado==0||estado==1||estado==2||estado==70) 
                 {
                 estado=1;  
                 }
@@ -103,19 +103,7 @@ int main(void){
 
         //FIN DEL SWITCH
         //DECISIONES
-        if (estado==3){
-            res="Tkn_numero \n";
-        }
-        if (estado==70){
-            res="Tkn_espacio \n";
-        }
-        if (estado==1){
-            res="Tkn_letra_minuscula \n";
-        }
-        if (estado==2)
-        {
-            res="Tkn_letra_mayuscula \n";
-        }
+        
         strcat(imprimir,res);
     }
 
