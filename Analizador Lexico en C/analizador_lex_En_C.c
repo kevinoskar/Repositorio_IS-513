@@ -8,12 +8,13 @@ int main(void){
     
     //Declaracioness
     char * tipos_datos[][3]={"entero","decimal","cadena"};
-    char palabras_reservadas[][11]={"definir","hasta que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
+    char palabras_reservadas[][11]={"definir","hasta_que","mientras","repetir","si","hacer","finsi","sino","leer","imprimir","cursor"};
+    char operador_logico[][3]={"||","&&","!"};
+	char operador_relacional[][6]={"<",">","==","!=","<=",">="};
+
     int estado=0; //ESTADO INICIAL
-    //Respuesta
-    char * res;
     int contador=0;
-    char cadena[20]="";
+    char cadena[20]="",res[20]="";
     
     //Respuesta a Imprimir en Array
     char imprimir[1000]="";
@@ -23,6 +24,7 @@ int main(void){
     //Abriendo Archivo Externo
     FILE *ptfile;
     char caracter;
+
     ptfile=fopen("archivo_entrada.prg","r");
     if(ptfile==NULL){
         fputs("error",stderr);
@@ -33,31 +35,30 @@ int main(void){
         if(caracter != ' '){
             cadena[contador]=caracter;
             contador++;
-            
+
+         //FILTRAR letra(Mayuscula o Minuscula) o numero 
+            if(caracter >= 'a' && caracter <= 'z'){
+                caracter='m';
+                
+            }else if(caracter >= 'A' && caracter <= 'Z'){
+                caracter='M';
+            }else if(caracter >= '0' && caracter <= '9' ){
+                caracter='n';
+            }   
         }else{
             printf("%s\n",cadena);
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
                     printf("Palabra Reservada Encontrada  %s\n",palabras_reservadas[i]);
-                    
+                    caracter='p';
                 }
             }
-            memset(cadena,0,sizeof(cadena));
+            memset(cadena,0,sizeof cadena);
             contador=0;
 
         }
-        
-       
-        //FILTRAR letra(Mayuscula o Minuscula) o numero 
-        if(caracter >= 'a' && caracter <= 'z'){
-            caracter='m';
-            
-        }else if(caracter >= 'A' && caracter <= 'Z'){
-            caracter='M';
-        }else if(caracter >= '0' && caracter <= '9' ){
-            caracter='n';
-        }
+
 
          ///Estados o Patrones
 
@@ -83,7 +84,7 @@ int main(void){
                 }
                 break;
             case 'M'://Mayusculas
-                if(estado==0||estado==1) 
+                if(estado==0||estado==70) 
                 {
                 estado=2;  
                 }
@@ -94,25 +95,28 @@ int main(void){
                 {
                 estado=4;  //estado Punto Decimal
                 }
-            case ' ':
-                estado=70;
+                break;
+            case 'p':
+                if(estado==1||estado==0)
+                {
+                    strcat(imprimir,"Palabra Reservada ");
+                }
                 break;
             default:
                 break;
         }
-
         //FIN DEL SWITCH
         //DECISIONES
         
-        strcat(imprimir,res);
     }
 
     printf("%s",imprimir);
     fclose(ptfile);
     ptfile=NULL;
 
+
     ptfile=fopen("archivo_salida.prg","w");
-    fwrite(imprimir,1,sizeof(imprimir),ptfile);
+    fwrite(imprimir,1,strlen(imprimir) ,ptfile);
     fclose(ptfile);
     return 0;
 }
