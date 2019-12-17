@@ -12,11 +12,11 @@ int main(void){
     int estado=0; //ESTADO INICIAL
     //Respuesta
     char * res;
-
-    char cadena;
+    int contador=0;
+    char cadena[]="";
     
     //Respuesta a Imprimir en Array
-    char imprimir[300]="";
+    char imprimir[1000]="";
     
     
     printf("--------------ANALIZADOR LEXICO EN C--------------\n");
@@ -29,6 +29,17 @@ int main(void){
         exit(1);
     }
     while ((caracter=fgetc(ptfile))!=EOF){        
+        
+        if(caracter != ' '){
+            cadena[contador]=caracter;
+            contador++;
+            
+        }else{
+            printf("%s",cadena);
+        }
+        
+        
+        
         //FILTRAR letra(Mayuscula o Minuscula) o numero 
         if(caracter >= 'a' && caracter <= 'z'){
             caracter='m';
