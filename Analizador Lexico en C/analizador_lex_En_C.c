@@ -13,7 +13,7 @@ int main(void){
     //Respuesta
     char * res;
     int contador=0;
-    char cadena[]="";
+    char cadena[20]="";
     
     //Respuesta a Imprimir en Array
     char imprimir[1000]="";
@@ -35,11 +35,17 @@ int main(void){
             contador++;
             
         }else{
-            printf("%s",cadena);
+            printf("%s\n",cadena);
+            for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
+                if (strcmp(cadena,palabras_reservadas[i])==0)
+                {
+                    printf("Palabra Reservada Encontrada  %s ",palabras_reservadas[i]);
+                    
+                }
+            }
         }
         
-        
-        
+       
         //FILTRAR letra(Mayuscula o Minuscula) o numero 
         if(caracter >= 'a' && caracter <= 'z'){
             caracter='m';
@@ -98,7 +104,7 @@ int main(void){
             res="Tkn_numero \n";
         }
         if (estado==70){
-            res="Tkn_espacio\n";
+            res="Tkn_espacio \n";
         }
         if (estado==1){
             res="Tkn_letra_minuscula \n";
