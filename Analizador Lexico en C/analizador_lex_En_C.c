@@ -16,7 +16,7 @@ int main(void){
     char cadena;
     
     //Respuesta a Imprimir en Array
-    char imprimir[100];
+    char imprimir[300]="";
     
     
     printf("--------------ANALIZADOR LEXICO EN C--------------\n");
@@ -29,7 +29,7 @@ int main(void){
         exit(1);
     }
     while ((caracter=fgetc(ptfile))!=EOF){        
-    //FILTRAR letra(Mayuscula o Minuscula) o numero 
+        //FILTRAR letra(Mayuscula o Minuscula) o numero 
         if(caracter >= 'a' && caracter <= 'z'){
             caracter='m';
             
@@ -39,71 +39,72 @@ int main(void){
             caracter='n';
         }
 
-    ///Estados o Patrones
+         ///Estados o Patrones
 
     
 
     ///Casos
-    switch (caracter){
-        case 'n':
-           if (estado==1 || estado==2 ||estado==70)
-           {
-               estado=3;  //Estado de Numero entrante
-           }else if (estado==0)
-           {
-              printf("No se permiten numeros al inicio del programa \n");
-           }
-           
-           
-            break;
-        case 'm'://Minusculas
-            if(estado==0||estado==2||estado==70) 
+        switch (caracter){
+            case 'n':
+            if (estado==1 || estado==2 ||estado==70)
             {
-               estado=1;  
-            }
-            break;
-        case 'M'://Mayusculas
-            if(estado==0||estado==1) 
+                estado=3;  //Estado de Numero entrante
+            }else if (estado==0)
             {
-               estado=2;  
+                printf("No se permiten numeros al inicio del programa \n");
             }
-            break;
-    
-        case '.':
-            if (estado==3 ||estado==1)
-            {
-               estado=4;  //estado Punto Decimal
-            }
-        case ' ':
-            estado=70;
-            break;
-        default:
-            break;
+            
+            
+                break;
+            case 'm'://Minusculas
+                if(estado==0||estado==2||estado==70) 
+                {
+                estado=1;  
+                }
+                break;
+            case 'M'://Mayusculas
+                if(estado==0||estado==1) 
+                {
+                estado=2;  
+                }
+                break;
+        
+            case '.':
+                if (estado==3 ||estado==1)
+                {
+                estado=4;  //estado Punto Decimal
+                }
+            case ' ':
+                estado=70;
+                break;
+            default:
+                break;
         }
 
         //FIN DEL SWITCH
         //DECISIONES
         if (estado==3){
-            res="Tkn_numero\n";
+            res="Tkn_numero \n";
         }
         if (estado==70){
             res="Tkn_espacio\n";
         }
         if (estado==1){
-            res="Tkn_letra_minuscula\n";
+            res="Tkn_letra_minuscula \n";
         }
         if (estado==2)
         {
-            res="Tkn_letra_mayuscula\n";
+            res="Tkn_letra_mayuscula \n";
         }
-
-        
         strcat(imprimir,res);
     }
+
     printf("%s",imprimir);
     fclose(ptfile);
+    ptfile=NULL;
 
-    fopen("archivo_salida","w");
-    fwrite()
+    ptfile=fopen("archivo_salida.prg","w");
+    fwrite(imprimir,1,sizeof(imprimir),ptfile);
+    fclose(ptfile);
     return 0;
 }
