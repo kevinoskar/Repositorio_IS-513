@@ -1,1 +1,1 @@
-definir leer Mkdir22 >= 
+definir leer Mkdir == ! 

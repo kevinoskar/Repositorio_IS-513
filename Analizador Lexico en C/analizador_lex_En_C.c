@@ -14,7 +14,7 @@ int main(void){
 
     int estado=0; //ESTADO INICIAL
     int contador=0;
-    char cadena[20]="",res[20]="<Tkn_";
+    char cadena[20]="",res[30]="<Tkn_";
     
     //Respuesta a Imprimir en Array
     char imprimir[1000]="";
@@ -51,7 +51,7 @@ int main(void){
             
             if(estado==5){
                 caracter='v';
-            }else{
+            }else if(estado!=6){
 
             //Busqueda de Palabra reservada
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
@@ -61,19 +61,32 @@ int main(void){
                     caracter='p';
                     strcat(res,cadena);
                     strcat(res,">");
-                }else{
-                    for (int i=0;i<=(sizeof(operador_relacional)/sizeof(operador_logico[0]));i++)
-                    {
-                      if (strcmp(cadena,operador_relacional[i])==0)
-                      {
-                         printf("Operador Relacional Encontrada %s \n",operador_relacional[i]); 
-                      }    
-                    }
                 }
-                
             }
             memset(cadena,0,sizeof cadena);
             contador=0;
+            }
+            if(estado==6){
+                for (int i=0;i<=(sizeof(operador_relacional)/sizeof(operador_relacional[0]));i++){
+                if (strcmp(cadena,operador_relacional[i])==0){
+                    printf("Operador Relacional Encontrada %s \n",operador_relacional[i]); 
+                    caracter='o';
+                    strcat(res,"operador_relacional");
+                    strcat(res,">");
+                }    
+            }
+            memset(cadena,0,sizeof cadena);
+            contador=0;
+            }else{
+                for (int i=0;i<=(sizeof(operador_logico)/sizeof(operador_logico[0]));i++){
+                    if (strcmp(cadena,operador_logico[i])==0){
+                        printf("Operador Logico Encontrada %s \n",operador_logico[i]); 
+                        caracter='l';
+                        strcat(res,"operador_logico");
+                        strcat(res,">");
+                        estado=7;
+                    } 
+                }
             }
         }
 
@@ -128,13 +141,28 @@ int main(void){
                 if(estado==5){
                     strcat(res,"variable>");
                     strcat(imprimir,res);
+                    memset(cadena,0,sizeof cadena);
+                    contador=0;
                     estado=0;
                 }
                 break;
-            case '<':
-                
+            case 'o':
+                if(estado==6){
+                    strcat(imprimir,res);
+                    memset(cadena,0,sizeof cadena);
+                    contador=0;
+                    estado=0;
+                }
+            case 'l':
+                if(estado==7){
+                    strcat(imprimir,res);
+                    memset(cadena,0,sizeof cadena);
+                    contador=0;
+                    estado=0;
+                }
                 break;
             default:
+                estado=6;
                 break;
         }
         //FIN DEL SWITCH
