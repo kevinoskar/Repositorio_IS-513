@@ -1,1 +1,1 @@
-<Tkn_definir><Tkn_leer>
+<Tkn_definir><Tkn_leer><Tkn_variable>

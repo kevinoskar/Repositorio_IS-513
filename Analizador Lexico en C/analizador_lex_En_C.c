@@ -42,12 +42,18 @@ int main(void){
                 
             }else if(caracter >= 'A' && caracter <= 'Z'){
                 caracter='M';
-            }else if(caracter >= '0' && caracter <= '9' ){
+                }else if(caracter >= '0' && caracter <= '9' ){
                 caracter='n';
             }   
         }else{
             printf("%s\n",cadena);
             strcpy(res,"<Tkn_");
+            
+            if(estado==5){
+                caracter='v';
+            }else{
+
+            //Busqueda de Palabra reservada
             for(int i=0;i<=(sizeof(palabras_reservadas)/sizeof(palabras_reservadas[0]));i++){
                 if (strcmp(cadena,palabras_reservadas[i])==0)
                 {
@@ -55,11 +61,20 @@ int main(void){
                     caracter='p';
                     strcat(res,cadena);
                     strcat(res,">");
+                }else{
+                    for (int i=0;i<=(sizeof(operador_relacional)/sizeof(operador_logico[0]));i++)
+                    {
+                      if (strcmp(cadena,operador_relacional[i])==0)
+                      {
+                         printf("Operador Relacional Encontrada %s \n",operador_relacional[i]); 
+                      }    
+                    }
                 }
+                
             }
             memset(cadena,0,sizeof cadena);
             contador=0;
-
+            }
         }
 
 
@@ -81,9 +96,12 @@ int main(void){
             
                 break;
             case 'm'://Minusculas
-                if(estado==0||estado==1||estado==2||estado==70) 
+                if(estado==0||estado==1|estado==70) 
                 {
                 estado=1;  
+                }
+                if(estado==2){
+                    estado=5;
                 }
                 break;
             case 'M'://Mayusculas
@@ -105,6 +123,16 @@ int main(void){
                     strcat(imprimir,res);
                     estado=0;
                 }
+                break;
+            case 'v':
+                if(estado==5){
+                    strcat(res,"variable>");
+                    strcat(imprimir,res);
+                    estado=0;
+                }
+                break;
+            case '<':
+                
                 break;
             default:
                 break;
